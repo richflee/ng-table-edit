@@ -35,4 +35,16 @@ export class ListResultsComponent implements OnInit {
     this.selectedEditMode = mode;
   }
 
+  resetEditMode() {
+    this.selectedEditMode = this.bulkEditModes[0];
+  }
+
+  onCancelEditMode() {
+    this.resetEditMode();
+  }
+
+  onSaveEditMode() {
+    this.resetEditMode();
+  }
+
 }

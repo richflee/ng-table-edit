@@ -1,9 +1,14 @@
 
 <p>Select bulk edit mode</p>
 <select (ngModelChange)="onEditModeChange($event)" [ngModel]="selectedEditMode">
-  <!-- <option [value]="undefined">-- Select an edit mode --</option> -->
   <option *ngFor="let mode of bulkEditModes" [ngValue]="mode">{{ mode.name }}</option>
 </select>
+
+<ng-container *ngIf="selectedEditMode.name && selectedEditMode.name.length > 0">
+  <button (click)="onCancelEditMode()">Cancel</button>
+  <button (click)="onSaveEditMode()">Save</button>
+</ng-container>
+
 
 <table>
   <thead>
