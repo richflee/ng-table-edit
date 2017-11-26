@@ -9,9 +9,13 @@ export class ListResultsComponent implements OnInit {
 
   public bulkEditModes: Array<object>;
   public results: Array<object>;
+  public parentResults: Array<object>;
   public selectedEditMode: object;
+  public selectedItems: Array<object>;
 
   constructor() {
+
+    this.selectedItems = [];
 
     this.bulkEditModes = [
       { name: undefined },
@@ -21,22 +25,39 @@ export class ListResultsComponent implements OnInit {
 
     this.selectedEditMode = this.bulkEditModes[0];
 
-    this.results = [
-      { name: 'Item1', price: 10000, age: 112, health: 62 },
-      { name: 'Item2', price: 11000, age: 102, health: 12 },
-      { name: 'Item3', price: 50999, age: 12, health: 34 }
+    this.parentResults = [
+      { id: '1234', name: 'Item1', price: 10000, age: 112, health: 62 },
+      { id: '1235', name: 'Item2', price: 11000, age: 102, health: 12 },
+      { id: '1236', name: 'Item3', price: 50999, age: 12, health: 34 }
     ];
+
+    this.results = this.parentResults;
   }
 
   ngOnInit() {
   }
 
+  handleCheckboxChange(event: any, id: string): void {
+    const checked = event.target.checked;
+
+    if (checked) {
+      const objIdx = this.parentResults.map((x) => x['id']).indexOf(id);
+      this.selectedItems.push(this.results[objIdx]);
+    } else {
+      const objIdx = this.selectedItems.map((x) => x['id']).indexOf(id);
+      this.selectedItems.splice(objIdx, 1);
+    }
+  }
+
   onEditModeChange(mode: { name: string }): void {
     this.selectedEditMode = mode;
+    this.results = this.selectedItems;
   }
 
   resetEditMode() {
     this.selectedEditMode = this.bulkEditModes[0];
+    this.results = this.parentResults;
+    this.selectedItems = [];
   }
 
   onCancelEditMode() {
