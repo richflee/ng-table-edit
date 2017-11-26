@@ -1,8 +1,10 @@
 
-<p>Select bulk edit mode</p>
-<select (ngModelChange)="onEditModeChange($event)" [ngModel]="selectedEditMode">
-  <option *ngFor="let mode of bulkEditModes" [ngValue]="mode">{{ mode.name }}</option>
-</select>
+<ng-container *ngIf="selectedItems.length > 0">
+  <p>Select bulk edit mode</p>
+  <select (ngModelChange)="onEditModeChange($event)" [ngModel]="selectedEditMode">
+    <option *ngFor="let mode of bulkEditModes" [ngValue]="mode">{{ mode.name }}</option>
+  </select>
+</ng-container>
 
 <ng-container *ngIf="selectedEditMode.name && selectedEditMode.name.length > 0">
   <button (click)="onCancelEditMode()">Cancel</button>
@@ -31,7 +33,7 @@
         </td>
         <ng-container *ngSwitchDefault>
           <td>
-            <input type="checkbox" name="selected-item" (change)="handleCheckboxChange($event, index)" >
+            <input type="checkbox" name="selected-item" (change)="handleCheckboxChange($event, item.id)" >
           </td>
           <td>
             {{ item.name }}
