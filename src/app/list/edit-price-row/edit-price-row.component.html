@@ -1,3 +1,6 @@
-<p>
-  {{ item.name }} has a price of ${{ item.price }}
-</p>
+<div>
+  <span>{{ item.name }}</span>
+  <span>
+    <input type="text" name="price" [(ngModel)]="item.price" />
+  </span>
+</div>
