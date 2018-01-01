@@ -1,15 +1,23 @@
 
 <ng-container *ngIf="selectedItems.length > 0">
-  <p>Select bulk edit mode</p>
-  <select (ngModelChange)="onEditModeChange($event)" [ngModel]="selectedEditMode">
-    <option *ngFor="let mode of bulkEditModes" [ngValue]="mode">{{ mode.name }}</option>
-  </select>
+
+  <div class="dropdown" style="display: inline-block;">
+      <a class="btn btn-outline-primary dropdown-toggle" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Bulk actions <i aria-hidden="true" class="fa fa-chevron-down"></i>
+      </a>
+      <ul aria-labelledby="bulkEditMenu" class="dropdown-menu" role="menu">
+          <li *ngFor="let mode of bulkEditModes">
+              <a role="menuitem" href="" (click)="onEditModeChange($event, mode)">
+                  <span *ngIf="mode.selected">[x]</span>
+                  {{ mode['name'] }}
+              </a>
+          </li>
+      </ul>
+  </div>
+
 </ng-container>
 
-<ng-container *ngIf="selectedEditMode.name && selectedEditMode.name.length > 0">
-  <button (click)="onCancelEditMode()">Cancel</button>
-  <button (click)="onSaveEditMode()">Save</button>
-</ng-container>
+<button *ngIf="selectedItems.length > 0" (click)="onCancelEditMode()">Cancel</button>
 
 
 <table>
@@ -24,32 +32,21 @@
   </thead>
   <tbody>
     <tr *ngFor="let item of results; let i = index">
-      <ng-container [ngSwitch]="selectedEditMode.name">
-        <td colspan="5" *ngSwitchCase="'Edit price'">
-            <app-edit-price-row [item]="item" ></app-edit-price-row>
-        </td>
-        <td colspan="5" *ngSwitchCase="'Edit health'">
-            <app-edit-health-row [item]="item" ></app-edit-health-row>
-        </td>
-        <ng-container *ngSwitchDefault>
-          <td>
-            <input type="checkbox" name="selected-item" (change)="handleCheckboxChange($event, item.id)" >
-          </td>
-          <td>
-            {{ item.name }}
-          </td>
-          <td>
-            {{ item.price }}
-          </td>
-          <td>
-            {{ item.age }}
-          </td>
-          <td>
-            {{ item.health }}
-          </td>
-        </ng-container>
-      </ng-container>
-      
+      <td [class.item-row-selected]="item.selected">
+        <input type="checkbox" name="selected-item" (change)="handleCheckboxChange($event, item.id)" >
+      </td>
+      <td>
+        {{ item.name }}
+      </td>
+      <td>
+        {{ item.price }}
+      </td>
+      <td>
+        {{ item.age }}
+      </td>
+      <td>
+        {{ item.health }}
+      </td>
     </tr>
   </tbody>
 </table>

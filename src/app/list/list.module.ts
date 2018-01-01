@@ -8,6 +8,9 @@ import { ListComponent } from './list.component';
 import { ListResultsComponent } from './list-results/list-results.component';
 import { EditPriceRowComponent } from './edit-price-row/edit-price-row.component';
 import { EditHealthRowComponent } from './edit-health-row/edit-health-row.component';
+import { ListEditPriceComponent } from './list-edit-price/list-edit-price.component';
+
+import { ListItemsService } from './list-items.service';
 
 @NgModule({
     imports: [
@@ -19,7 +22,11 @@ import { EditHealthRowComponent } from './edit-health-row/edit-health-row.compon
         ListComponent,
         ListResultsComponent,
         EditPriceRowComponent,
-        EditHealthRowComponent
+        EditHealthRowComponent,
+        ListEditPriceComponent
+    ],
+    providers: [
+        ListItemsService
     ]
 })
 export class ListModule { }

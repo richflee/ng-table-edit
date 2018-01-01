@@ -1,6 +1,8 @@
 <div>
   <span>{{ item.name }}</span>
   <span>
-    <input type="text" name="price" [(ngModel)]="item.price" />
+    <input #priceRef="ngModel" type="text" name="price" 
+      pattern="[0-9]*" [(ngModel)]="item.price" required minlength="2" />
+    {{priceRef.valid}}
   </span>
 </div>

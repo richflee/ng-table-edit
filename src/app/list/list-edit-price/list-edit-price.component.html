@@ -1,0 +1,30 @@
+<p>
+  list-edit-price works!
+</p>
+<button type="submit" (click)="saveEditedItems()">Save</button>
+
+<table>
+  <thead>
+    <tr>
+      <td>Select</td>
+      <td>Item name</td>
+      <td>Price</td>
+      <td>Age</td>
+      <td>Health</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of results; let i = index">
+        <td colspan="5">
+          <div>
+            <span>{{ item.name }}</span>
+            <span>
+              <input #priceRef="ngModel" type="text" name="price" 
+                pattern="[0-9]*" [(ngModel)]="item.price" required minlength="2" />
+              {{priceRef.valid}}
+            </span>
+          </div>
+        </td>
+    </tr>
+  </tbody>
+</table>

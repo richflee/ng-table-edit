@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/observable/of';
+import { ListItemsService } from '../list-items.service';
 
 @Component({
   selector: 'app-list-results',
@@ -9,54 +15,53 @@ export class ListResultsComponent implements OnInit {
 
   public bulkEditModes: Array<object>;
   public results: Array<object>;
-  public parentResults: Array<object>;
-  public selectedEditMode: object;
+
+  public bulkEditModes$: Observable<Array<object>>;
   public selectedItems: Array<object>;
 
-  constructor() {
+  constructor(private router: Router, private listItemsService: ListItemsService) {
 
     this.selectedItems = [];
 
     this.bulkEditModes = [
-      { name: undefined },
       { name: 'Edit price' },
       { name: 'Edit health' }
     ];
 
-    this.selectedEditMode = this.bulkEditModes[0];
-
-    this.parentResults = [
+    this.results = [
       { id: '1234', name: 'Item1', price: 10000, age: 112, health: 62 },
       { id: '1235', name: 'Item2', price: 11000, age: 102, health: 12 },
       { id: '1236', name: 'Item3', price: 50999, age: 12, health: 34 }
     ];
-
-    this.results = this.parentResults;
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   handleCheckboxChange(event: any, id: string): void {
     const checked = event.target.checked;
 
     if (checked) {
-      const objIdx = this.parentResults.map((x) => x['id']).indexOf(id);
+      const objIdx = this.results.map((x) => x['id']).indexOf(id);
+      this.results[objIdx]['selected'] = true;
       this.selectedItems.push(this.results[objIdx]);
     } else {
       const objIdx = this.selectedItems.map((x) => x['id']).indexOf(id);
+      this.results[objIdx]['selected'] = false;
       this.selectedItems.splice(objIdx, 1);
     }
   }
 
-  onEditModeChange(mode: { name: string }): void {
-    this.selectedEditMode = mode;
-    this.results = this.selectedItems;
+  onEditModeChange(event: any = null, mode: { name: string }): void {
+
+    if (event) {
+      event.preventDefault();
+    }
+
+    this.listItemsService.setItemsForBulkEditPrice(this.selectedItems);
+    this.router.navigate(['/list/bulk-edit-price']);
   }
 
   resetEditMode() {
-    this.selectedEditMode = this.bulkEditModes[0];
-    this.results = this.parentResults;
     this.selectedItems = [];
   }
 
