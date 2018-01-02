@@ -1,18 +1,14 @@
 import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
-import { AfterViewInit, OnChanges, SimpleChanges } from '@angular/core/src/metadata/lifecycle_hooks';
+import { OnChanges, SimpleChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Directive({
   selector: '[selectedTableRow]'
 })
-export class SelectedTableRowDirective implements AfterViewInit, OnChanges {
+export class SelectedTableRowDirective implements OnChanges {
 
   @Input() selectedTableRow: boolean;
 
   constructor(private el: ElementRef, private renderer: Renderer2) { }
-
-  ngAfterViewInit() {
-    console.log('AFTER VIEW INIT');
-  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes && changes['selectedTableRow']['currentValue'] !== null) {
