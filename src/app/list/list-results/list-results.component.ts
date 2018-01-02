@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/of';
 import { ListItemsService } from '../list-items.service';
+import { SelectedTableRowDirective } from '../../common/selected-table-row.directive';
+
+
 
 @Component({
   selector: 'app-list-results',
@@ -46,7 +49,8 @@ export class ListResultsComponent implements OnInit {
       this.selectedItems.push(this.results[objIdx]);
     } else {
       const objIdx = this.selectedItems.map((x) => x['id']).indexOf(id);
-      this.results[objIdx]['selected'] = false;
+      const resultsIdx = this.results.map((x) => x['id']).indexOf(id);
+      this.results[resultsIdx]['selected'] = false;
       this.selectedItems.splice(objIdx, 1);
     }
   }

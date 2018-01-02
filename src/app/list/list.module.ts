@@ -9,6 +9,7 @@ import { ListResultsComponent } from './list-results/list-results.component';
 import { EditPriceRowComponent } from './edit-price-row/edit-price-row.component';
 import { EditHealthRowComponent } from './edit-health-row/edit-health-row.component';
 import { ListEditPriceComponent } from './list-edit-price/list-edit-price.component';
+import { SelectedTableRowDirective } from '../common/selected-table-row.directive';
 
 import { ListItemsService } from './list-items.service';
 
@@ -23,7 +24,8 @@ import { ListItemsService } from './list-items.service';
         ListResultsComponent,
         EditPriceRowComponent,
         EditHealthRowComponent,
-        ListEditPriceComponent
+        ListEditPriceComponent,
+        SelectedTableRowDirective
     ],
     providers: [
         ListItemsService
