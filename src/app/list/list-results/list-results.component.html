@@ -19,6 +19,8 @@
 
 <button *ngIf="selectedItems.length > 0" (click)="onCancelEditMode()">Cancel</button>
 
+<button (click)="addItem()">Add item</button>
+
 
 <table>
   <thead>
@@ -31,8 +33,8 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of results; let i = index">
-      <td [class.item-row-selected]="item.selected">
+    <tr [selectedTableRow]="item.selected" *ngFor="let item of results; let i = index">
+      <td>
         <input type="checkbox" name="selected-item" (change)="handleCheckboxChange($event, item.id)" >
       </td>
       <td>
